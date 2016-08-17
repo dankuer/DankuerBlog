@@ -12,7 +12,7 @@ router.get('/reg',function(req,res){
 });
 router.post('/reg',function(req,res){
     var user=req.body;
-    console.log(user);
+    //console.log(user);
     if(user.password!=user.repassword){
         //密码不一致
         req.flash('error','两次密码输入不一致！');
@@ -52,6 +52,25 @@ router.get('/login',function(req,res){
     res.render('users/login',{title:'登录页面'});
 });
 router.post('/login',function(req,res){
-
+    var user=req.body;
+    console.log('login:',user);
+    Models.User.findOne({username:user.username,password:md5(user.password)},function(err,doc){
+        if(err){
+            console.log(err);
+            req.flash('error',err);
+            return res.redirect('back');
+        }else{
+            if(doc){
+                //用户存在
+                req.session.user=doc;
+                req.flash('success','登陆成功！');
+                return res.redirect('/');
+            }else{
+                req.flash('error','用户名或密码错误!');
+                return res.redirect('back');
+            }
+        }
+    })
 });
+
 module.exports = router;
