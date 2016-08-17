@@ -63,6 +63,7 @@ router.post('/login',function(req,res){
             if(doc){
                 //用户存在
                 req.session.user=doc;
+                console.log('登录成功！');
                 req.flash('success','登陆成功！');
                 return res.redirect('/');
             }else{
@@ -72,5 +73,11 @@ router.post('/login',function(req,res){
         }
     })
 });
-
+router.get('/logout',function(req,res){
+   var user=req.session.user;
+    if(user){
+        req.session.user=null;
+        res.redirect('/users/login');
+    }
+});
 module.exports = router;
