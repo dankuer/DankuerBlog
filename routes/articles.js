@@ -6,6 +6,7 @@ var router=express.Router();
 var Models=require('../db');
 var markdown=require('markdown').markdown;
 var moment=require('moment');
+var auth=require('../middleWare');
 router.get('/list',function(req,res){
     Models.Article.find({}).populate('author').exec(function(err,docs){
        if(err){
@@ -77,10 +78,10 @@ router.get('/edit/:id',function(req,res){
     }
 
 });
-router.get('/add',function(req,res){
+router.get('/add',auth.checkLogin,function(req,res){
     res.render('articles/add',{title:'增加文章'});
 });
-router.post('/add',function(req,res){
+router.post('/add',auth.checkLogin,function(req,res){
     var article=req.body;
     //console.log(article);
     //article.createAt=Date.now();
@@ -93,7 +94,7 @@ router.post('/add',function(req,res){
             return res.redirect('back');
         }else{
             req.flash('success','添加成功！');
-            return res.redirect('/');
+            return res.redirect('/articles/list');
         }
     })
 });

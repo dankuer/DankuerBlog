@@ -1,16 +1,16 @@
 var express = require('express');
 var router = express.Router();
 var Models=require('../db');
-
+var auth=require('../middleWare')
 var md5=require('../util').md5;
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
-router.get('/reg',function(req,res){
+router.get('/reg',auth.checkNotLogin,function(req,res){
     res.render('users/reg',{title:'注册页面'});
 });
-router.post('/reg',function(req,res){
+router.post('/reg',auth.checkNotLogin,function(req,res){
     var user=req.body;
     //console.log(user);
     if(user.password!=user.repassword){
@@ -40,7 +40,7 @@ router.post('/reg',function(req,res){
                     }else{
                         req.session.user=doc;
                         req.flash('success','用户添加成功！');
-                        return res.redirect('/');
+                        return res.redirect('/articles/list');
                     }
                 });
             }
@@ -78,6 +78,7 @@ router.get('/logout',function(req,res){
    var user=req.session.user;
     if(user){
         req.session.user=null;
+        console.log('session:',req.session);
         res.redirect('/users/login');
     }
 });
