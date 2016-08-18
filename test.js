@@ -13,3 +13,4 @@
 //console.log(`用户名${username}已经存在`);
 console.log(Date.now());
 console.log(new Date());
+console.log(Date.now().toLocaleString());

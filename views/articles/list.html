@@ -11,7 +11,7 @@
                 <a href="/articles/detail/<%=article._id%>"><%=article.title%></a>
             </div>
             <p><%=article.content%></p>
-            <p>作者：<%=article.author.username%> | 发表时间：<%=article.createAt%></p>
+            <p>作者：<%=article.author.username%> | 发表时间：<%=dateFormat(article.createAt)%></p>
         </div>
         <%})%>
     </div>

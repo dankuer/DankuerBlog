@@ -62,6 +62,7 @@ router.post('/login',function(req,res){
         }else{
             if(doc){
                 //用户存在
+
                 req.session.user=doc;
                 console.log('登录成功！');
                 req.flash('success','登陆成功！');

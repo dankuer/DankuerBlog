@@ -15,5 +15,5 @@ exports.Article=mongoose.model('Article',new mongoose.Schema({
     title:{type:String,isRequire:true},
     content:{type:String,isRequire:true},
     author:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
-    createAt:{type:Date,default:Date.now()}
+    createAt:{type:Date,default:new Date()}
 }));
