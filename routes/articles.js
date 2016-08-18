@@ -5,7 +5,16 @@ var express=require('express');
 var router=express.Router();
 var Models=require('../db');
 router.get('/list',function(req,res){
-    res.render('articles/list',{title:'文章列表'});
+
+    Models.Article.find({}).populate('author').exec(function(err,docs){
+       if(err){
+           throw err;
+       }else{
+           console.log(docs);
+           return res.render('articles/list',{title:'文章列表',articles:docs});
+       }
+    });
+
 });
 router.get('/add',function(req,res){
     res.render('articles/add',{title:'增加文章'});
