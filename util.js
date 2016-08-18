@@ -15,4 +15,4 @@ exports.dateFormat=function(date){
 };
 exports.markdownToHtml=function(markdownStr){
     return markdown.toHTML(markdownStr);
-}
+};

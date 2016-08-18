@@ -1,21 +1,24 @@
 <% include ../includes/header.html %>
 <div>
-    <form action="/articles/add" method="post" class="form-horizontal">
+    <form action="/articles/edit" method="post" class="form-horizontal">
+        <input type="hidden" name="_id" value="<%=article._id%>">
         <div class="form-group">
             <label for="title" class="col-xs-2 control-label">文章标题</label>
             <div class="input-group col-xs-8">
                 <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
-                <input type="text" class="form-control" name="title" id="title" placeholder="文章标题">
+                <input type="text" class="form-control" name="title" id="title" placeholder="文章标题" value="<%=article.title%>">
             </div>
         </div>
         <div class="form-group">
             <label for="content" class="col-xs-2 control-label">内&nbsp;&nbsp;容</label>
             <div class="input-group col-xs-8">
                 <div class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></div>
-                <textarea name="content" id="content" rows="6" class="form-control" placeholder="请输入内容"></textarea>
+                <textarea name="content" id="content" rows="12" class="form-control" placeholder="请输入内容"><%=article.content%></textarea>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary col-xs-offset-4 col-xs-4">增加</button>
+
+        <button type="submit" class="btn btn-primary col-xs-offset-3 col-xs-2">确认修改</button>
+        <a type="button" href="/articles/delete/<%=article._id%>" class="btn btn-danger col-xs-offset-1 col-xs-2">删除文章</a>
     </form>
 </div>
 <% include ../includes/footer.html %>

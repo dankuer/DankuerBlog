@@ -1,8 +1,13 @@
 <%include ../includes/header.html%>
-<div class="col-xs-8 col-xs-offset-2">
-    <h3><%=article.title%></h3>
-    <hr>
-    <p>作者：<%=article.author.username%> | 创建于：<%=dateFormat(article.createAt)%></p>
-    <p><%-markdownToHtml(article.content)%></p>
+<div class="row">
+    <div class="col-xs-8 col-xs-offset-2">
+        <h3><%=article.title%></h3>
+        <hr>
+        <p>作者：<img src="<%=article.author.avatar+'s=14'%>" alt=""> <%=article.author.username%> | 创建于：<%=dateFormat(article.createAt)%></p>
+        <p><%-markdownToHtml(article.content)%></p>
+    </div>
+</div>
+<div class="row">
+    <a type="button" href="/articles/edit/<%=article._id%>" class="btn btn-info col-xs-offset-4 col-xs-4">编辑</a>
 </div>
 <%include ../includes/footer.html%>

@@ -51,9 +51,32 @@ router.get('/detail/:id',function(req,res){
         req.flash('error','文章id不能为空');
         return res.redirect('back');
     }
+});
+router.get('/edit/:id',function(req,res){
+    var id=req.params.id;
+    //console.log('id:',id);
+    if(id){
+        Models.Article.findById(id).populate('author').exec(function(err,doc){
+            if(err){
+                console.log(err);
+                req.flash('error',err);
+                return res.redirect('back');
+            }else{
+                if(doc){
+                    return res.render('articles/edit',{title:'编辑文章',article:doc});
+                }else{
+                    req.flash('error','未找到指定的文章');
+                    return res.redirect('back');
+                }
+            }
+        });
+    }else{
+        //若id为空或者未找到对应文章
+        req.flash('error','文章id不能为空');
+        return res.redirect('back');
+    }
 
-
-})
+});
 router.get('/add',function(req,res){
     res.render('articles/add',{title:'增加文章'});
 });
@@ -73,5 +96,28 @@ router.post('/add',function(req,res){
             return res.redirect('/');
         }
     })
+});
+router.post('/edit',function(req,res){
+    var article=req.body;
+    Models.Article.findById(article._id,function(err,doc){
+        if(err){
+            req.flash('error',err);
+            return res.redirect('back');
+        }else{
+            if(doc){
+                doc.title=article.title;
+                doc.content=article.content;
+                doc.save(function(err,result){
+                    if(err){
+                        req.flash('error',err);
+                        return res.redirect('back');
+                    }else{
+                        req.flash('success','修改成功！');
+                        return res.redirect('/articles/detail/'+result._id);
+                    }
+                })
+            }
+        }
+    });
 });
 module.exports=router;
