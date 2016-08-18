@@ -31,7 +31,7 @@ router.post('/reg',function(req,res){
                 return res.redirect('back');
             }else{
                 user.password=md5(user.password);
-                user.avatar="https://secure.gravatar.com/avatar/"+md5(user.email)+"?s=25";
+                user.avatar="https://secure.gravatar.com/avatar/"+md5(user.email)+"?";
                 Models.User.create(user,function(err,doc){
                     if(err){
                         console.log(err);

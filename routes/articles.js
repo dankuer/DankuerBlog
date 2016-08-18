@@ -5,12 +5,16 @@ var express=require('express');
 var router=express.Router();
 var Models=require('../db');
 var markdown=require('markdown').markdown;
-//var moment=require('moment');
+var moment=require('moment');
 router.get('/list',function(req,res){
     Models.Article.find({}).populate('author').exec(function(err,docs){
        if(err){
            throw err;
        }else{
+           docs.forEach(function(article){
+               article.createAt=moment(article.createAt).format('YYYY年MM月DD日 hh:mm:ss');
+               article.content=markdown.toHTML(article.content);
+           });
            //console.log(docs);
            return res.render('articles/list',{title:'文章列表',articles:docs});
        }
@@ -30,7 +34,7 @@ router.get('/detail/:id',function(req,res){
                 if(doc){
                     console.log('找到对应文章：',doc);
                     doc.content=markdown.toHTML(doc.content);
-                    //doc.createAt=article.createAt.toLocaleString();
+                    doc.createAt=moment(doc.createAt).format('YYYY年MM月DD日 hh:mm:ss');
                     return res.render('articles/detail',{title:'文章内容',article:doc});
 
                 }else{

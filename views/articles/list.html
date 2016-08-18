@@ -4,14 +4,16 @@
         articles.forEach(function(article){%>
     <div class="media">
         <div class="media-left">
-            <img src="<%=article.author.avatar%>" class="media-object" alt="">
+            <img src="<%=article.author.avatar+'s=64'%>" class="media-object" alt="">
         </div>
         <div class="media-body">
             <div class="media-heading">
-                <a href="/articles/detail/<%=article._id%>"><%=article.title%></a>
+                <a href="/articles/detail/<%=article._id%>"><h3><%=article.title%></h3></a>
             </div>
-            <p><%=article.content%></p>
-            <p>作者：<%=article.author.username%> | 发表时间：<%=dateFormat(article.createAt)%></p>
+            <p>作者：<%=article.author.username%> | 发表时间：<%=article.createAt%></p>
+            <hr>
+            <p><%-article.content%></p>
+
         </div>
         <%})%>
     </div>

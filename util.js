@@ -8,6 +8,6 @@ exports.md5=function(str){
                 .update(str)
                 .digest('hex');
 }
-exports.dateFormat=function(date){
-    return moment(date).format('YYYY年MM月DD日hh:mm:ss');
-}
+//exports.dateFormat=function(date){
+//    return moment(date).format('YYYY年MM月DD日hh:mm:ss');
+//}

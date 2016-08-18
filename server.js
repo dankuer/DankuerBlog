@@ -41,7 +41,7 @@ app.use(function(req,res,next){
     res.locals.user = req.session.user;
     res.locals.success = req.flash('success').toString();
     res.locals.error = req.flash('error').toString();
-    res.locals.dateFormat=util.dateFormat;
+    //res.locals.dateFormat=util.dateFormat;
     next();
 });
 
