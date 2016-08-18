@@ -1,6 +1,7 @@
 /**
  * Created by Dankuer on 2016/8/17.
  */
+var moment=require('moment');
 //var user={
 //    username:1,
 //    password:2
@@ -14,3 +15,4 @@
 console.log(Date.now());
 console.log(new Date());
 console.log(Date.now().toLocaleString());
+console.log(moment(new Date()*1000).format('YYYY年MM月DD日hh:mm:ss'));

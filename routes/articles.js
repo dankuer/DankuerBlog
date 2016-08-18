@@ -11,10 +11,11 @@ router.get('/list',function(req,res){
        if(err){
            throw err;
        }else{
-           docs.forEach(function(article){
-               article.createAt=moment(article.createAt).format('YYYY年MM月DD日 hh:mm:ss');
-               article.content=markdown.toHTML(article.content);
-           });
+           //docs.forEach(function(article){
+           //    //article.createAt=moment(article.createAt).format('YYYY年MM月DD日hh:mm:ss');
+           //    article.createAt=article.createAt.toLocaleString();
+           //    article.content=markdown.toHTML(article.content);
+           //});
            //console.log(docs);
            return res.render('articles/list',{title:'文章列表',articles:docs});
        }
@@ -33,8 +34,10 @@ router.get('/detail/:id',function(req,res){
             }else{
                 if(doc){
                     console.log('找到对应文章：',doc);
-                    doc.content=markdown.toHTML(doc.content);
-                    doc.createAt=moment(doc.createAt).format('YYYY年MM月DD日 hh:mm:ss');
+                    //doc.content=markdown.toHTML(doc.content);
+                    //console.log(moment(doc.createAt).format('YYYY年MM月DD日 hh:mm:ss'));
+                    //doc.createAt=moment(doc.createAt).format('YYYY年MM月DD日 hh:mm:ss');
+                    //console.log(doc.createAt);
                     return res.render('articles/detail',{title:'文章内容',article:doc});
 
                 }else{

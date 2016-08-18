@@ -1,21 +1,22 @@
 <% include ../includes/header.html %>
-<div class="media col-xs-offset-3">
+<ul class="media-list col-xs-offset-3">
     <%
         articles.forEach(function(article){%>
-    <div class="media">
+    <li class="media">
         <div class="media-left">
-            <img src="<%=article.author.avatar+'s=64'%>" class="media-object" alt="">
+            <a href="#">
+                <img src="<%=article.author.avatar+'s=64'%>" class="media-object" alt="">
+            </a>
         </div>
         <div class="media-body">
             <div class="media-heading">
-                <a href="/articles/detail/<%=article._id%>"><h3><%=article.title%></h3></a>
+                <a href="/articles/detail/<%=article._id%>"><h4><%=article.title%></h4></a>
             </div>
-            <p>作者：<%=article.author.username%> | 发表时间：<%=article.createAt%></p>
+            <p>作者：<%=article.author.username%> | 发表时间：<%=dateFormat(article.createAt)%></p>
             <hr>
-            <p><%-article.content%></p>
-
+            <p><%-markdownToHtml(article.content)%></p>
         </div>
-        <%})%>
-    </div>
-</div>
+    </li>
+    <%})%>
+</ul>
 <% include ../includes/footer.html %>
