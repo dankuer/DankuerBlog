@@ -1,13 +1,24 @@
 <%include ../includes/header.html%>
-<div class="row">
-    <div class="col-xs-8 col-xs-offset-2">
+<!--<div class="row">-->
+    <!--<div class="col-xs-8 col-xs-offset-2">-->
+        <!--<h3><%=article.title%></h3>-->
+        <!--<hr>-->
+        <!--<p>作者：<img src="<%=article.author.avatar+'s=14'%>" alt=""> <%=article.author.username%> | 创建于：<%=dateFormat(article.createAt)%></p>-->
+        <!--<p><%-markdownToHtml(article.content)%></p>-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="row">-->
+    <!--<a type="button" href="/articles/edit/<%=article._id%>" class="btn btn-info col-xs-offset-4 col-xs-4">编辑</a>-->
+<!--</div>-->
+<div class="panel panel-default col-xs-6 col-xs-offset-3">
+    <div class="panel-heading">
         <h3><%=article.title%></h3>
-        <hr>
-        <p>作者：<img src="<%=article.author.avatar+'s=14'%>" alt=""> <%=article.author.username%> | 创建于：<%=dateFormat(article.createAt)%></p>
-        <p><%-markdownToHtml(article.content)%></p>
     </div>
-</div>
-<div class="row">
-    <a type="button" href="/articles/edit/<%=article._id%>" class="btn btn-info col-xs-offset-4 col-xs-4">编辑</a>
+    <div class="panel-body">
+        <%-markdownToHtml(article.content)%>
+    </div>
+    <div class="panel-footer">
+        <a  href="/articles/edit/<%=article._id%>" class="btn btn-info col-xs-offset-4 col-xs-4">编辑</a>
+    </div>
 </div>
 <%include ../includes/footer.html%>
