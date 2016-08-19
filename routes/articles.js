@@ -12,12 +12,6 @@ router.get('/list',function(req,res){
        if(err){
            throw err;
        }else{
-           //docs.forEach(function(article){
-           //    //article.createAt=moment(article.createAt).format('YYYY年MM月DD日hh:mm:ss');
-           //    article.createAt=article.createAt.toLocaleString();
-           //    article.content=markdown.toHTML(article.content);
-           //});
-           //console.log(docs);
            return res.render('articles/list',{title:'文章列表',articles:docs});
        }
     });
@@ -53,7 +47,7 @@ router.get('/detail/:id',function(req,res){
         return res.redirect('back');
     }
 });
-router.get('/edit/:id',function(req,res){
+router.get('/edit/:id',auth.checkLogin,function(req,res){
     var id=req.params.id;
     //console.log('id:',id);
     if(id){
@@ -98,7 +92,7 @@ router.post('/add',auth.checkLogin,function(req,res){
         }
     })
 });
-router.post('/edit',function(req,res){
+router.post('/edit',auth.checkLogin,function(req,res){
     var article=req.body;
     Models.Article.findById(article._id,function(err,doc){
         if(err){
@@ -121,4 +115,33 @@ router.post('/edit',function(req,res){
         }
     });
 });
+router.get('/delete/:id',auth.checkLogin,function(req,res){
+    var _id=req.params.id;
+    console.log('get id:',_id);
+    Models.Article.findById(_id,function(err,doc){
+        if(doc){
+            console.log('find delete doc:',doc);
+            console.log('doc.user:',typeof(doc.author));
+            console.log('req.session.user',typeof(req.session.user._id));
+            if(doc.author==req.session.user._id){
+                Models.Article.remove({_id:_id},function(err,result){
+                    if(err){
+                        req.flash('error',err);
+                        return res.redirect('back');
+                    }else{
+                        console.log(result);
+                        req.flash('success','成功删除！');
+                        return res.redirect('/articles/list');
+                    }
+                })
+            }else{
+                req.flash('error','您不是作者，不能删除！');
+                return res.redirect('back');
+            }
+        }else{
+            req.flash('error','文章id不能为空');
+            return res.redirect('back');
+        }
+    })
+})
 module.exports=router;
